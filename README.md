@@ -1,501 +1,431 @@
-Evidence System
-Forensic Ledger · Probative Custody · Offline Verification
+# Evidence System
 
-Immutable, auditable, and independently verifiable digital evidence custody system.
-Designed for forensic, legal, and high-integrity scenarios.
+## Sistema de Custodia Digital de Evidencias
 
-Table of Contents
+---
 
-Overview
+> **Documento descriptivo orientado a peritos judiciales, profesionales del derecho y órganos jurisdiccionales.**
+> No requiere conocimientos técnicos para su comprensión.
 
-Core Guarantees
+---
 
-System Architecture
+## Índice
 
-Database Ledger Model
+* [Objeto del sistema](#objeto-del-sistema)
+* [Qué problema resuelve](#qué-problema-resuelve)
+* [Garantías que ofrece](#garantías-que-ofrece)
+* [Cómo se protege la evidencia](#cómo-se-protege-la-evidencia)
+* [Verificación independiente](#verificación-independiente)
+* [Exportación probatoria](#exportación-probatoria)
+* [Firma y anclaje legal](#firma-y-anclaje-legal)
+* [Qué NO hace el sistema](#qué-no-hace-el-sistema)
+* [Validez pericial](#validez-pericial)
+* [Estado del sistema](#estado-del-sistema)
 
-Application Responsibilities
+---
 
-Forensic Export & Offline Verification
+## Objeto del sistema
 
-PAdES-LTA Legal Anchoring
+**Evidence System** es un sistema diseñado para **custodiar evidencias digitales** garantizando que:
 
-Configuration & Environment
+* no puedan ser modificadas posteriormente,
+* cualquier intento de alteración sea detectable,
+* y terceros puedan verificar la integridad de la evidencia **sin confiar en el sistema original**.
 
-Design Principles
+Su finalidad es **preservar prueba digital** de forma **trazable, verificable y defendible**.
 
-Intended Use Cases
+---
 
-Non-Goals
+## Qué problema resuelve
 
-Project Status
+En muchos sistemas digitales:
 
-Overview
+* los registros pueden modificarse,
+* la trazabilidad depende de la buena fe del operador,
+* la prueba solo es válida “mientras el sistema existe”.
 
-Evidence System is a forensic-grade digital custody platform focused on proof, not convenience.
+Este sistema elimina esos problemas creando una **cadena de custodia digital sólida**, comparable a una **cadena de custodia física**, pero aplicada a información digital.
 
-It provides a cryptographically chained, append-only event ledger, enforced at database level and aligned with strict application-side controls.
-All exported artifacts can be verified offline, without access to the original system.
+---
 
-This repository is not a generic backend template.
-It is an evidence and custody system designed under the assumption of hostile review.
+## Garantías que ofrece
 
-Core Guarantees
+### Garantías fundamentales
 
-The system enforces the following guarantees by design:
+```
+┌───────────────────────────────────────────────┐
+│  GARANTÍAS DEL SISTEMA                         │
+├───────────────────────────────────────────────┤
+│  • La evidencia no puede ser modificada        │
+│  • El orden de los hechos es verificable       │
+│  • Toda alteración es detectable               │
+│  • La verificación no depende del proveedor    │
+└───────────────────────────────────────────────┘
+```
 
-Append-only ledger
+Estas garantías **no dependen de procedimientos internos**, sino que están **impuestas por el propio diseño del sistema**.
 
-No UPDATE or DELETE operations allowed on forensic events.
+---
 
-Enforced via database triggers.
+## Cómo se protege la evidencia
 
-Deterministic ordering
+Cada hecho relevante (ingreso de evidencia, exportación, firma, etc.) se registra como un **evento encadenado**:
 
-Events are ordered using a monotonic per-expediente sequence (seq).
+* Cada evento referencia al anterior.
+* Si se altera uno, se rompe la cadena.
+* El sistema impide borrar o modificar eventos ya registrados.
 
-No reliance on timestamps for integrity.
+Esto equivale, en términos conceptuales, a **numerar y sellar cada hoja de un expediente**, de modo que no pueda extraerse ni sustituirse sin dejar rastro.
 
-Cryptographic chaining
+---
 
-Each event references the previous one via prev_hash.
+## Verificación independiente
 
-Any manipulation is detectable.
+Una característica esencial del sistema es que **la verificación no requiere confiar en la aplicación ni en la base de datos original**.
 
-Independent verification
+La integridad puede comprobarse mediante:
 
-Ledger integrity can be verified directly in SQL.
+* una función de verificación interna (para uso técnico),
+* o mediante herramientas externas, sin acceso al sistema.
 
-Exports can be validated offline by third parties.
+```
+┌───────────────────────────────────────────────┐
+│  PRINCIPIO CLAVE                              │
+├───────────────────────────────────────────────┤
+│  “No hay que confiar en el sistema:            │
+│   hay que poder comprobarlo.”                  │
+└───────────────────────────────────────────────┘
+```
 
-Fail-fast configuration
+---
 
-All runtime behavior is controlled via validated environment variables.
+## Exportación probatoria
 
-Misconfiguration prevents startup.
+El sistema permite generar una **exportación probatoria** en formato ZIP que incluye:
 
-System Architecture
+* los registros de hechos,
+* un manifiesto de huellas digitales (hashes),
+* y, opcionalmente, los ficheros asociados.
 
-At a high level, the system is composed of four clearly separated layers:
+Este archivo puede:
 
-[ Application Layer ]
-        |
-        v
-[ Forensic Ledger (PostgreSQL) ]
-        |
-        v
-[ Export & Verification Artifacts ]
-        |
-        v
-[ Legal Anchoring (PAdES-LTA) ]
+* conservarse fuera del sistema,
+* entregarse a un tercero,
+* analizarse sin conexión ni acceso interno.
 
+---
 
-Each layer has a single responsibility and can be independently audited.
+## Firma y anclaje legal
 
-Database Ledger Model
+Para reforzar el valor jurídico, la exportación puede anclarse mediante:
 
-The eventos table acts as a forensic ledger, not a log.
+* un **documento PDF** que describe la exportación,
+* la **huella digital** del archivo ZIP,
+* y una **firma electrónica avanzada de tipo PAdES-LTA**.
 
-Key properties:
+Este tipo de firma:
 
-Monotonic sequence per expediente (seq)
+* incorpora sellado temporal,
+* permite verificación a largo plazo,
+* es verificable con herramientas estándar europeas.
 
-Strict prev_hash validation
+---
 
-UPDATE and DELETE fully blocked
+## Qué NO hace el sistema
 
-Ledger verification function:
+Es importante aclarar los límites del sistema:
 
-SELECT * FROM verify_expediente_ledger('<EXPEDIENTE_UUID>');
+```
+┌───────────────────────────────────────────────┐
+│  EL SISTEMA NO:                               │
+├───────────────────────────────────────────────┤
+│  • Decide hechos o interpreta pruebas         │
+│  • Sustituye al criterio pericial             │
+│  • Garantiza la veracidad del contenido        │
+│  • Actúa como juez o evaluador                 │
+└───────────────────────────────────────────────┘
+```
 
+El sistema **no juzga**, **no interpreta** y **no concluye**.
+Únicamente **preserva y protege** la evidencia.
 
-A failed verification indicates tampering or corruption, not a soft warning.
+---
 
-Application Responsibilities
+## Validez pericial
 
-The application layer is intentionally constrained:
+Desde un punto de vista pericial, el sistema es relevante porque:
 
-Hashes are computed only in the application
+* permite demostrar **integridad**, no solo afirmarla,
+* separa claramente custodia, análisis y conclusión,
+* facilita la explicación técnica ante terceros,
+* y reduce la dependencia de declaraciones del proveedor.
 
-SQL never recalculates or “decides” hashes
+El diseño está pensado para **escenarios de revisión hostil**.
 
-Database logic is defensive, not business-driven
+---
 
-All writes to the ledger are append-only and validated
+## Estado del sistema
 
-This separation ensures that no hidden logic exists in the database.
+Actualmente el sistema proporciona:
 
-Forensic Export & Offline Verification
+```
+┌───────────────────────────────────────────────┐
+│  ESTADO ACTUAL                                │
+├───────────────────────────────────────────────┤
+│  ✔ Custodia inmutable de evidencias           │
+│  ✔ Trazabilidad verificable                   │
+│  ✔ Exportación independiente                  │
+│  ✔ Firma electrónica PAdES-LTA                │
+└───────────────────────────────────────────────┘
+```
 
-The system can generate a forensic-grade ZIP export containing:
+Extensiones futuras (análisis, almacenamiento especial, notarización) se plantean como **capas independientes**, sin afectar a la custodia ya realizada.
 
-Canonical JSON artifacts
+---
 
-Cryptographic hash manifest
+## Nota final
 
-Ledger snapshot
+Este sistema no se apoya en promesas, procedimientos internos o confianza implícita.
+Se apoya en **verificabilidad**, **rastro técnico** y **principios de custodia** trasladados al ámbito digital.
 
-Optional binary evidence (when available)
+## Rol profesional y alcance de intervención
 
-Export
-npx ts-node src/scripts/export-zip.ts
+Este sistema ha sido diseñado y documentado por un **perito forense digital**, 
+actuando exclusivamente en el ámbito técnico de:
 
-Offline verification
-npx ts-node src/scripts/verify-zip.ts
+- diseño de sistemas de custodia digital,
+- preservación de integridad y trazabilidad de evidencias,
+- verificación técnica de inmutabilidad y encadenado de eventos,
+- definición de mecanismos de exportación y verificación independiente.
 
+La intervención pericial se limita **única y exclusivamente** a aspectos
+técnicos y estructurales del sistema.
 
-Verification does not require:
+Este documento **no constituye**:
+- una certificación de hechos,
+- una valoración del contenido de la evidencia,
+- una conclusión pericial sobre la veracidad de los datos,
+- ni una interpretación jurídica de los mismos.
 
-Database access
+Cualquier análisis, interpretación o conclusión pericial deberá realizarse
+sobre evidencias concretas, en un contexto procesal específico, y mediante
+el correspondiente informe pericial independiente.
 
-Application code
+Neiland85
+Neil M. - Digital Forensic Expert
 
-Network connectivity
+# Evidence System
 
-PAdES-LTA Legal Anchoring
+## Sistema de Custodia Digital de Evidencias
 
-Exports can be legally anchored using PAdES-LTA:
+---
 
-A PDF “Acta de Exportación” is generated referencing the ZIP hash
+> **Documento descriptivo orientado a peritos judiciales, profesionales del derecho y órganos jurisdiccionales.**
+> No requiere conocimientos técnicos para su comprensión.
 
-The PDF is signed with a qualified certificate
+---
 
-Timestamping (TSA) enables long-term validation
+## Índice
 
-Verification can be performed using ETSI DSS tools, independently of this system.
+* [Objeto del sistema](#objeto-del-sistema)
+* [Qué problema resuelve](#qué-problema-resuelve)
+* [Garantías que ofrece](#garantías-que-ofrece)
+* [Cómo se protege la evidencia](#cómo-se-protege-la-evidencia)
+* [Verificación independiente](#verificación-independiente)
+* [Exportación probatoria](#exportación-probatoria)
+* [Firma y anclaje legal](#firma-y-anclaje-legal)
+* [Qué NO hace el sistema](#qué-no-hace-el-sistema)
+* [Validez pericial](#validez-pericial)
+* [Estado del sistema](#estado-del-sistema)
 
-Configuration & Environment
+---
 
-All configuration is centralized and strictly validated:
+## Objeto del sistema
 
-Single source of truth: src/config/env.ts
+**Evidence System** es un sistema diseñado para **custodiar evidencias digitales** garantizando que:
 
-.env.example documents all required variables
+* no puedan ser modificadas posteriormente,
+* cualquier intento de alteración sea detectable,
+* y terceros puedan verificar la integridad de la evidencia **sin confiar en el sistema original**.
 
-.env is never committed
+Su finalidad es **preservar prueba digital** de forma **trazable, verificable y defendible**.
 
-Missing or invalid configuration causes startup failure
+---
 
-This eliminates implicit behavior and environment drift.
+## Qué problema resuelve
 
-Design Principles
+En muchos sistemas digitales:
 
-Verification over trust
+* los registros pueden modificarse,
+* la trazabilidad depende de la buena fe del operador,
+* la prueba solo es válida “mientras el sistema existe”.
 
-Immutability over convenience
+Este sistema elimina esos problemas creando una **cadena de custodia digital sólida**, comparable a una **cadena de custodia física**, pero aplicada a información digital.
 
-Determinism over timestamps
+---
 
-Explicit constraints over conventions
+## Garantías que ofrece
 
-Defense in depth
+### Garantías fundamentales
 
-The system is designed assuming external scrutiny.
+```
+┌───────────────────────────────────────────────┐
+│  GARANTÍAS DEL SISTEMA                         │
+├───────────────────────────────────────────────┤
+│  • La evidencia no puede ser modificada        │
+│  • El orden de los hechos es verificable       │
+│  • Toda alteración es detectable               │
+│  • La verificación no depende del proveedor    │
+└───────────────────────────────────────────────┘
+```
 
-Intended Use Cases
+Estas garantías **no dependen de procedimientos internos**, sino que están **impuestas por el propio diseño del sistema**.
 
-Digital forensic custody
+---
 
-Legal evidence preservation
+## Cómo se protege la evidencia
 
-Audit-grade event tracking
+Cada hecho relevante (ingreso de evidencia, exportación, firma, etc.) se registra como un **evento encadenado**:
 
-Compliance-driven systems
+* Cada evento referencia al anterior.
+* Si se altera uno, se rompe la cadena.
+* El sistema impide borrar o modificar eventos ya registrados.
 
-High-integrity investigative workflows
+Esto equivale, en términos conceptuales, a **numerar y sellar cada hoja de un expediente**, de modo que no pueda extraerse ni sustituirse sin dejar rastro.
 
-Non-Goals
+---
 
-This system intentionally does not aim to be:
+## Verificación independiente
 
-A generic CRUD backend
+Una característica esencial del sistema es que **la verificación no requiere confiar en la aplicación ni en la base de datos original**.
 
-A soft-delete based audit log
+La integridad puede comprobarse mediante:
 
-A mutable event store
+* una función de verificación interna (para uso técnico),
+* o mediante herramientas externas, sin acceso al sistema.
 
-A trust-based logging solution
+```
+┌───────────────────────────────────────────────┐
+│  PRINCIPIO CLAVE                              │
+├───────────────────────────────────────────────┤
+│  “No hay que confiar en el sistema:            │
+│   hay que poder comprobarlo.”                  │
+└───────────────────────────────────────────────┘
+```
 
-Project Status
+---
 
-Current capabilities:
+## Exportación probatoria
 
-✅ Database-enforced forensic ledger
+El sistema permite generar una **exportación probatoria** en formato ZIP que incluye:
 
-✅ Application-level cryptographic chaining
+* los registros de hechos,
+* un manifiesto de huellas digitales (hashes),
+* y, opcionalmente, los ficheros asociados.
 
-✅ Offline-verifiable exports
+Este archivo puede:
 
-✅ PAdES-LTA legal anchoring
+* conservarse fuera del sistema,
+* entregarse a un tercero,
+* analizarse sin conexión ni acceso interno.
 
-Future extensions (NLP analysis, WORM storage, notarization) are designed as optional, isolated layers.
+---
 
-License
+## Firma y anclaje legal
 
-MIT — see LICENSE.
+Para reforzar el valor jurídico, la exportación puede anclarse mediante:
 
-Por qué este diseño funciona (resumen rápido)
+* un **documento PDF** que describe la exportación,
+* la **huella digital** del archivo ZIP,
+* y una **firma electrónica avanzada de tipo PAdES-LTA**.
 
-El README explica garantías, no features.
+Este tipo de firma:
 
-La estructura guía a:
+* incorpora sellado temporal,
+* permite verificación a largo plazo,
+* es verificable con herramientas estándar europeas.
 
-desarrolladores
+---
 
-auditores
+## Qué NO hace el sistema
 
-peritos
+Es importante aclarar los límites del sistema:
 
-No hay promesas vagas: todo lo descrito existe en el código.
+```
+┌───────────────────────────────────────────────┐
+│  EL SISTEMA NO:                               │
+├───────────────────────────────────────────────┤
+│  • Decide hechos o interpreta pruebas         │
+│  • Sustituye al criterio pericial             │
+│  • Garantiza la veracidad del contenido        │
+│  • Actúa como juez o evaluador                 │
+└───────────────────────────────────────────────┘
+```
 
-Es fácil de leer, pero difícil de refutar.
+El sistema **no juzga**, **no interpreta** y **no concluye**.
+Únicamente **preserva y protege** la evidencia.
 
-Si quieres, el siguiente refinado puede ser:
+---
 
-añadir diagramas Mermaid
+## Validez pericial
 
-una versión corta (README_PUBLIC.md)
+Desde un punto de vista pericial, el sistema es relevante porque:
 
-o un README orientado a juzgado / peritos (lenguaje no técnico)
+* permite demostrar **integridad**, no solo afirmarla,
+* separa claramente custodia, análisis y conclusión,
+* facilita la explicación técnica ante terceros,
+* y reduce la dependencia de declaraciones del proveedor.
 
-Dime cómo lo dejamos redondo.
+El diseño está pensado para **escenarios de revisión hostil**.
 
-traducelo a español
+---
 
-Aquí tienes el README completamente traducido al español, manteniendo el tono profesional, la precisión técnica y el enfoque pericial del original. Puedes copiar/pegar y reemplazar el README actual.
+## Estado del sistema
 
-Evidence System
-Ledger Forense · Custodia Probatoria · Verificación Offline
+Actualmente el sistema proporciona:
 
-Sistema de custodia de evidencia digital inmutable, auditable y verificable de forma independiente.
-Diseñado para escenarios forenses, legales y de alta integridad.
+```
+┌───────────────────────────────────────────────┐
+│  ESTADO ACTUAL                                │
+├───────────────────────────────────────────────┤
+│  ✔ Custodia inmutable de evidencias           │
+│  ✔ Trazabilidad verificable                   │
+│  ✔ Exportación independiente                  │
+│  ✔ Firma electrónica PAdES-LTA                │
+└───────────────────────────────────────────────┘
+```
 
-Tabla de Contenidos
+Extensiones futuras (análisis, almacenamiento especial, notarización) se plantean como **capas independientes**, sin afectar a la custodia ya realizada.
 
-Visión general
+---
 
-Garantías principales
+## Nota final
 
-Arquitectura del sistema
+Este sistema no se apoya en promesas, procedimientos internos o confianza implícita.
+Se apoya en **verificabilidad**, **rastro técnico** y **principios de custodia** trasladados al ámbito digital.
 
-Modelo de ledger en base de datos
+## Rol profesional y alcance de intervención
 
-Responsabilidades de la aplicación
+Este sistema ha sido diseñado y documentado por un **perito forense digital**, 
+actuando exclusivamente en el ámbito técnico de:
 
-Exportación forense y verificación offline
+- diseño de sistemas de custodia digital,
+- preservación de integridad y trazabilidad de evidencias,
+- verificación técnica de inmutabilidad y encadenado de eventos,
+- definición de mecanismos de exportación y verificación independiente.
 
-Anclaje legal PAdES-LTA
+La intervención pericial se limita **única y exclusivamente** a aspectos
+técnicos y estructurales del sistema.
 
-Configuración y entorno
+Este documento **no constituye**:
+- una certificación de hechos,
+- una valoración del contenido de la evidencia,
+- una conclusión pericial sobre la veracidad de los datos,
+- ni una interpretación jurídica de los mismos.
 
-Principios de diseño
+Cualquier análisis, interpretación o conclusión pericial deberá realizarse
+sobre evidencias concretas, en un contexto procesal específico, y mediante
+el correspondiente informe pericial independiente.
 
-Casos de uso previstos
-
-No objetivos
-
-Estado del proyecto
-
-Visión general
-
-Evidence System es una plataforma de custodia digital de grado forense orientada a la prueba, no a la conveniencia.
-
-Proporciona un ledger de eventos encadenado criptográficamente y append-only, impuesto a nivel de base de datos y alineado con controles estrictos en la aplicación.
-Todos los artefactos exportados pueden verificarse offline, sin acceso al sistema original.
-
-Este repositorio no es una plantilla genérica de backend.
-Es un sistema de evidencia y custodia, diseñado bajo la asunción de revisión hostil.
-
-Garantías principales
-
-El sistema impone por diseño las siguientes garantías:
-
-Ledger append-only
-
-No se permiten operaciones UPDATE ni DELETE sobre eventos forenses.
-
-Impuesto mediante triggers en base de datos.
-
-Orden determinista
-
-Los eventos se ordenan mediante una secuencia monotónica por expediente (seq).
-
-No se depende de marcas temporales para la integridad.
-
-Encadenado criptográfico
-
-Cada evento referencia al anterior mediante prev_hash.
-
-Cualquier manipulación es detectable.
-
-Verificación independiente
-
-La integridad del ledger puede verificarse directamente en SQL.
-
-Las exportaciones pueden validarse offline por terceros.
-
-Configuración fail-fast
-
-Todo el comportamiento en runtime se controla mediante variables de entorno validadas.
-
-Una configuración inválida impide el arranque.
-
-Arquitectura del sistema
-
-A alto nivel, el sistema se compone de cuatro capas claramente separadas:
-
-[ Capa de Aplicación ]
-        |
-        v
-[ Ledger Forense (PostgreSQL) ]
-        |
-        v
-[ Artefactos de Exportación y Verificación ]
-        |
-        v
-[ Anclaje Legal (PAdES-LTA) ]
-
-
-Cada capa tiene una única responsabilidad y puede auditarse de forma independiente.
-
-Modelo de ledger en base de datos
-
-La tabla eventos actúa como un ledger forense, no como un log.
-
-Propiedades clave:
-
-Secuencia monotónica por expediente (seq)
-
-Validación estricta de prev_hash
-
-Bloqueo total de UPDATE y DELETE
-
-Función de verificación del ledger:
-
-SELECT * FROM verify_expediente_ledger('<UUID_DEL_EXPEDIENTE>');
-
-
-Una verificación fallida indica manipulación o corrupción, no un aviso blando.
-
-Responsabilidades de la aplicación
-
-La capa de aplicación está intencionadamente restringida:
-
-Los hashes se calculan únicamente en la aplicación
-
-SQL nunca recalcula ni “decide” hashes
-
-La lógica en base de datos es defensiva, no de negocio
-
-Todas las escrituras en el ledger son append-only y validadas
-
-Esta separación garantiza que no exista lógica oculta en la base de datos.
-
-Exportación forense y verificación offline
-
-El sistema puede generar una exportación ZIP de grado forense que incluye:
-
-Artefactos JSON canónicos
-
-Manifiesto criptográfico de hashes
-
-Snapshot del ledger
-
-Inclusión opcional de binarios (cuando estén disponibles)
-
-Exportación
-npx ts-node src/scripts/export-zip.ts
-
-Verificación offline
-npx ts-node src/scripts/verify-zip.ts
-
-
-La verificación no requiere:
-
-Acceso a la base de datos
-
-Código de la aplicación
-
-Conectividad de red
-
-Anclaje legal PAdES-LTA
-
-Las exportaciones pueden anclarse legalmente mediante PAdES-LTA:
-
-Se genera un PDF “Acta de Exportación” que referencia el hash del ZIP
-
-El PDF se firma con un certificado cualificado
-
-El sellado temporal (TSA) permite validación a largo plazo
-
-La verificación puede realizarse con herramientas ETSI DSS, independientemente de este sistema.
-
-Configuración y entorno
-
-Toda la configuración está centralizada y estrictamente validada:
-
-Fuente única de verdad: src/config/env.ts
-
-.env.example documenta todas las variables requeridas
-
-.env nunca se versiona
-
-Variables faltantes o inválidas impiden el arranque
-
-Esto elimina comportamientos implícitos y deriva de entorno.
-
-Principios de diseño
-
-Verificación por encima de confianza
-
-Inmutabilidad por encima de conveniencia
-
-Determinismo por encima de timestamps
-
-Restricciones explícitas por encima de convenciones
-
-Defensa en profundidad
-
-El sistema se diseña asumiendo escrutinio externo.
-
-Casos de uso previstos
-
-Custodia digital forense
-
-Preservación de evidencia legal
-
-Trazabilidad de eventos con nivel de auditoría
-
-Sistemas orientados a cumplimiento normativo
-
-Flujos de investigación de alta integridad
-
-No objetivos
-
-Este sistema no pretende ser:
-
-Un backend CRUD genérico
-
-Un sistema de auditoría con soft-delete
-
-Un event store mutable
-
-Una solución basada en supuestos de confianza
-
-Estado del proyecto
-
-Capacidades actuales:
-
-✅ Ledger forense impuesto por base de datos
-
-✅ Encadenado criptográfico a nivel de aplicación
-
-✅ Exportaciones verificables offline
-
-✅ Anclaje legal mediante PAdES-LTA
-
-Las extensiones futuras (análisis NLP, almacenamiento WORM, notarización) se diseñan como capas opcionales e independientes.
-
-Licencia
-
-MIT — ver LICENSE.
+Neiland85
+Neil M. - Digital Forensic Expert
