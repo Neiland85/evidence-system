@@ -1,0 +1,10 @@
+{
+  "evidence_received": "Evidencia recibida correctamente.",
+  "metadata_validated": "Metadatos validados.",
+  "file_hashed": "Se ha calculado la huella digital del fichero.",
+  "stored_worm": "Fichero almacenado en almacenamiento inmutable.",
+  "event_signed": "Evento firmado digitalmente.",
+  "export_created": "Exportación creada.",
+  "export_signed": "Exportación firmada con PAdES-LTA.",
+  "case_closed": "Expediente cerrado."
+}

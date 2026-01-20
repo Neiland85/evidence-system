@@ -1,0 +1,10 @@
+{
+  "evidence_received": "Evidence received successfully.",
+  "metadata_validated": "Metadata validated.",
+  "file_hashed": "File hash calculated.",
+  "stored_worm": "File stored in immutable storage.",
+  "event_signed": "Event digitally signed.",
+  "export_created": "Export created.",
+  "export_signed": "Export signed with PAdES-LTA.",
+  "case_closed": "Case closed."
+}

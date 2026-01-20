@@ -1,0 +1,38 @@
+{
+  "name": "evidence-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Neiland85/evidence-system.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Neiland85/evidence-system/issues"
+  },
+  "homepage": "https://github.com/Neiland85/evidence-system#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "i18next": "^25.7.4",
+    "i18next-fs-backend": "^2.6.1",
+    "pg": "^8.17.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/i18next": "^12.1.0",
+    "@types/node": "^25.0.9",
+    "nodemon": "^3.1.11",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
