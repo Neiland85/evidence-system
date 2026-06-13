@@ -17,7 +17,9 @@
     "test:contracts": "npm run build && node tests/unit/custody-contracts.test.mjs && node tests/unit/custody-exit-codes.test.mjs",
     "gate:hexagonal": "npm run typecheck && npm run test:contracts && npm run gate:functional",
     "test:idempotency:gate": "npm run build && node tests/unit/idempotent-append.test.mjs",
-    "gate:idempotency": "npm run typecheck && npm run test:idempotency:gate && npm run gate:hexagonal"
+    "gate:idempotency": "npm run typecheck && npm run test:idempotency:gate && npm run gate:hexagonal",
+    "test:serialized:gate": "npm run build && node tests/unit/serialized-append.test.mjs",
+    "gate:serialized": "npm run typecheck && npm run test:serialized:gate && npm run gate:idempotency"
   },
   "repository": {
     "type": "git",
