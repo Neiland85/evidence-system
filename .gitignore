@@ -1,0 +1,34 @@
+# dependencies
+node_modules/
+
+# env
+.env
+.env.*
+!.env.example
+
+# build/runtime
+dist/
+build/
+coverage/
+exports/
+tmp/
+temp/
+logs/
+*.log
+
+# OS/editor
+.DS_Store
+.vscode/
+.idea/
+
+# evidence/generated artifacts
+*.zip
+*.tar
+*.tar.gz
+*.pdf
+*.p12
+*.pem
+*.key
+*.crt
+*.db
+*.sqlite
