@@ -228,7 +228,7 @@ function main() {
 
   assert.throws(
     () => verifyZipIndependently(tamperedZip),
-    /invalid event hash|hash mismatch/,
+    /invalid event hash|hash mismatch|size mismatch/,
     "tampered ZIP must fail independent verification"
   );
 
