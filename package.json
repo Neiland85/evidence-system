@@ -19,7 +19,9 @@
     "test:idempotency:gate": "npm run build && node tests/unit/idempotent-append.test.mjs",
     "gate:idempotency": "npm run typecheck && npm run test:idempotency:gate && npm run gate:hexagonal",
     "test:serialized:gate": "npm run build && node tests/unit/serialized-append.test.mjs",
-    "gate:serialized": "npm run typecheck && npm run test:serialized:gate && npm run gate:idempotency"
+    "gate:serialized": "npm run typecheck && npm run test:serialized:gate && npm run gate:idempotency",
+    "test:durable:idempotency:gate": "npm run build && node tests/unit/durable-idempotency-gate-4b.test.mjs",
+    "gate:durable:idempotency": "npm run typecheck && npm run test:durable:idempotency:gate && npm run gate:serialized"
   },
   "repository": {
     "type": "git",
