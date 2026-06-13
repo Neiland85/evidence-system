@@ -1,8 +1,8 @@
 import fs from "fs";
 import path from "path";
 import crypto from "crypto";
-import archiver from "archiver";
 import { Pool } from "pg";
+const archiver: any = require("archiver");
 
 function sha256File(filepath: string): Promise<string> {
   return new Promise((resolve, reject) => {

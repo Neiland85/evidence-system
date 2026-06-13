@@ -7,7 +7,23 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run typecheck",
+    "typecheck": "tsc --noEmit",
+    "audit:prod": "npm audit --omit=dev",
+    "audit:all": "npm audit",
+    "test:functional:gate": "node tests/functional/evidence-system-functional-gate.mjs",
+    "gate:functional": "npm run typecheck && npm run test:functional:gate && npm run audit:prod && npm run audit:all",
+    "build": "tsc",
+    "test:contracts": "npm run build && node tests/unit/custody-contracts.test.mjs && node tests/unit/custody-exit-codes.test.mjs",
+    "gate:hexagonal": "npm run typecheck && npm run test:contracts && npm run gate:functional",
+    "test:idempotency:gate": "npm run build && node tests/unit/idempotent-append.test.mjs",
+    "gate:idempotency": "npm run typecheck && npm run test:idempotency:gate && npm run gate:hexagonal",
+    "test:serialized:gate": "npm run build && node tests/unit/serialized-append.test.mjs",
+    "gate:serialized": "npm run typecheck && npm run test:serialized:gate && npm run gate:idempotency",
+    "test:durable:idempotency:gate": "npm run build && node tests/unit/durable-idempotency-gate-4b.test.mjs",
+    "gate:durable:idempotency": "npm run typecheck && npm run test:durable:idempotency:gate && npm run gate:serialized",
+    "test:postgres:idempotency:contract": "npm run build && node tests/unit/postgres-idempotency-transaction-gate-4c.test.mjs",
+    "gate:postgres:idempotency": "npm run typecheck && npm run test:postgres:idempotency:contract && npm run gate:durable:idempotency"
   },
   "repository": {
     "type": "git",
@@ -22,15 +38,22 @@
   },
   "homepage": "https://github.com/Neiland85/evidence-system#readme",
   "dependencies": {
+    "adm-zip": "^0.5.17",
+    "archiver": "^8.0.0",
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "i18next": "^25.7.4",
     "i18next-fs-backend": "^2.6.1",
-    "pg": "^8.17.1"
+    "pg": "^8.17.1",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@types/adm-zip": "^0.5.8",
+    "@types/archiver": "^8.0.0",
     "@types/express": "^5.0.6",
     "@types/i18next": "^12.1.0",
     "@types/node": "^25.0.9",
+    "@types/pg": "^8.20.0",
     "nodemon": "^3.1.11",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
