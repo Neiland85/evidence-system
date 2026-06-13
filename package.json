@@ -10,7 +10,9 @@
     "test": "npm run typecheck",
     "typecheck": "tsc --noEmit",
     "audit:prod": "npm audit --omit=dev",
-    "audit:all": "npm audit"
+    "audit:all": "npm audit",
+    "test:functional:gate": "node tests/functional/evidence-system-functional-gate.mjs",
+    "gate:functional": "npm run typecheck && npm run test:functional:gate && npm run audit:prod && npm run audit:all"
   },
   "repository": {
     "type": "git",
