@@ -1,0 +1,132 @@
+
+> evidence-system@1.0.0 gate:postgres:idempotency
+> npm run typecheck && npm run test:postgres:idempotency:contract && npm run gate:durable:idempotency
+
+
+> evidence-system@1.0.0 typecheck
+> tsc --noEmit
+
+
+> evidence-system@1.0.0 test:postgres:idempotency:contract
+> npm run build && node tests/unit/postgres-idempotency-transaction-gate-4c.test.mjs
+
+
+> evidence-system@1.0.0 build
+> tsc
+
+[postgres-idempotency-transaction-gate-4c] OK
+[postgres-idempotency-transaction-gate-4c] created=created
+[postgres-idempotency-transaction-gate-4c] replayed=replayed
+[postgres-idempotency-transaction-gate-4c] quarantine_exit=99
+[postgres-idempotency-transaction-gate-4c] begin_count=1
+[postgres-idempotency-transaction-gate-4c] commit_count=1
+[postgres-idempotency-transaction-gate-4c] rollback_on_conflict=1
+
+> evidence-system@1.0.0 gate:durable:idempotency
+> npm run typecheck && npm run test:durable:idempotency:gate && npm run gate:serialized
+
+
+> evidence-system@1.0.0 typecheck
+> tsc --noEmit
+
+
+> evidence-system@1.0.0 test:durable:idempotency:gate
+> npm run build && node tests/unit/durable-idempotency-gate-4b.test.mjs
+
+
+> evidence-system@1.0.0 build
+> tsc
+
+[durable-idempotency-gate-4b] OK
+[durable-idempotency-gate-4b] replay_after_reload=replayed
+[durable-idempotency-gate-4b] quarantine_exit=99
+[durable-idempotency-gate-4b] concurrent_created=1
+[durable-idempotency-gate-4b] concurrent_replayed=9
+[durable-idempotency-gate-4b] final_event_count=1
+
+> evidence-system@1.0.0 gate:serialized
+> npm run typecheck && npm run test:serialized:gate && npm run gate:idempotency
+
+
+> evidence-system@1.0.0 typecheck
+> tsc --noEmit
+
+
+> evidence-system@1.0.0 test:serialized:gate
+> npm run build && node tests/unit/serialized-append.test.mjs
+
+
+> evidence-system@1.0.0 build
+> tsc
+
+[serialized-append] OK
+[serialized-append] created=1
+[serialized-append] replayed=9
+[serialized-append] quarantine_exit=99
+[serialized-append] final_ledger_events=1
+
+> evidence-system@1.0.0 gate:idempotency
+> npm run typecheck && npm run test:idempotency:gate && npm run gate:hexagonal
+
+
+> evidence-system@1.0.0 typecheck
+> tsc --noEmit
+
+
+> evidence-system@1.0.0 test:idempotency:gate
+> npm run build && node tests/unit/idempotent-append.test.mjs
+
+
+> evidence-system@1.0.0 build
+> tsc
+
+[idempotent-append] OK
+[idempotent-append] first_event_hash=25db576e5f8c443085ca50dc4815381ece2a8680046305fa96315b04bb9adc5a
+[idempotent-append] replay_status=replayed
+[idempotent-append] quarantine_exit=99
+
+> evidence-system@1.0.0 gate:hexagonal
+> npm run typecheck && npm run test:contracts && npm run gate:functional
+
+
+> evidence-system@1.0.0 typecheck
+> tsc --noEmit
+
+
+> evidence-system@1.0.0 test:contracts
+> npm run build && node tests/unit/custody-contracts.test.mjs && node tests/unit/custody-exit-codes.test.mjs
+
+
+> evidence-system@1.0.0 build
+> tsc
+
+[custody-contracts] OK
+[custody-contracts] event_hash=e91b878c0438d0b739970193b343a3385ce115f4de488ff40170b54b40b5ce31
+[custody-contracts] idempotency_key=736ca71ae4d7706a962db176bc42834c24663a15fa787076838a082fa20cf2bf
+[custody-exit-codes] OK
+[custody-exit-codes] quarantine_exit=99
+
+> evidence-system@1.0.0 gate:functional
+> npm run typecheck && npm run test:functional:gate && npm run audit:prod && npm run audit:all
+
+
+> evidence-system@1.0.0 typecheck
+> tsc --noEmit
+
+
+> evidence-system@1.0.0 test:functional:gate
+> node tests/functional/evidence-system-functional-gate.mjs
+
+[functional-gate] OK
+[functional-gate] golden_zip=/var/folders/rx/4wv686nx3q36dk61cslkpg3h0000gn/T/evidence-system-functional-gate-uG75BD/golden-evidence-export.zip
+[functional-gate] final_event_hash=a47a17c23805147d55abedaa9a1c8df5877a651e3482ef62f462cd80d2c9439d
+
+> evidence-system@1.0.0 audit:prod
+> npm audit --omit=dev
+
+found 0 vulnerabilities
+
+> evidence-system@1.0.0 audit:all
+> npm audit
+
+found 0 vulnerabilities
