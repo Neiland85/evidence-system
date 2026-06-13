@@ -12,7 +12,10 @@
     "audit:prod": "npm audit --omit=dev",
     "audit:all": "npm audit",
     "test:functional:gate": "node tests/functional/evidence-system-functional-gate.mjs",
-    "gate:functional": "npm run typecheck && npm run test:functional:gate && npm run audit:prod && npm run audit:all"
+    "gate:functional": "npm run typecheck && npm run test:functional:gate && npm run audit:prod && npm run audit:all",
+    "build": "tsc",
+    "test:contracts": "npm run build && node tests/unit/custody-contracts.test.mjs",
+    "gate:hexagonal": "npm run typecheck && npm run test:contracts && npm run gate:functional"
   },
   "repository": {
     "type": "git",
