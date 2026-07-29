@@ -1,0 +1,110 @@
+# Clarity Structures Commercial Source-Available License v1.1
+
+Copyright © 2026 Clarity Structures Digital S.L.
+All rights reserved.
+
+## 1. Ownership and Control
+
+This repository contains proprietary materials owned or lawfully controlled by Clarity Structures Digital S.L.
+
+Original works created by Neil Muñoz Lago are covered by this licence only to the extent that Clarity Structures Digital S.L. owns or lawfully controls the applicable exploitation rights, as identified in the corresponding chain-of-title documentation.
+
+The source code, documentation, architecture, technical designs, validation materials, tests, examples, release materials, manifests and related repository contents are protected by copyright and other applicable intellectual property laws.
+
+## 2. Source-Available Review
+
+This repository may be made visible exclusively for:
+
+- technical review;
+- commercial due diligence;
+- architectural assessment;
+- licensing evaluation;
+- acquisition analysis;
+- enterprise integration assessment;
+- professional security or compliance assessment expressly authorized by Clarity Structures Digital S.L.
+
+Public or private visibility does not grant an open source licence or any implied right of use.
+
+## 3. Review Rights Only
+
+Unless expressly granted through a separate written agreement signed by Clarity Structures Digital S.L., no rights are granted to:
+
+- deploy, host or operate the software in production;
+- copy or redistribute the repository or substantial portions of it;
+- modify, adapt or publish derivative versions;
+- sublicense, resell or commercialize the software;
+- incorporate the software into another product, platform or service;
+- provide the software as a managed or hosted service;
+- remove or alter ownership, copyright or commercial notices;
+- use repository contents to train, fine-tune, evaluate or improve AI models or datasets;
+- represent the software as open source, transferred, certified, endorsed or approved.
+
+Any technical review must remain limited to the evaluation purpose expressly authorized.
+
+## 4. Scope of Protection
+
+This licence applies exclusively to original materials owned or lawfully controlled by Clarity Structures Digital S.L.
+
+Third-party software, dependencies, frameworks, libraries, specifications and other external materials remain governed by their respective licences and terms.
+
+Protection applies to each identified asset version, including, where applicable:
+
+- repository and branch;
+- commit or tag;
+- release and baseline;
+- manifests and checksums;
+- documented architecture;
+- tests and validation evidence;
+- generated delivery packages.
+
+The inclusion of third-party materials does not expand the rights granted under their respective licences.
+
+## 5. Commercial Availability
+
+Clarity Structures Digital S.L. may consider, through a separate written agreement:
+
+- commercial licensing;
+- internal enterprise licensing;
+- controlled proof-of-concept deployments;
+- strategic integration;
+- private deployment;
+- sublicensing or resale arrangements;
+- technical partnership;
+- partial or complete acquisition of an identified software asset.
+
+Each agreement must define the assets, versions, permitted uses, territory, duration, transferability, sublicensing rights, support, security obligations and commercial terms.
+
+Commercial enquiries:
+
+admin@claritystructures.com
+
+## 6. Contributions
+
+No external contribution is accepted unless it is covered by a separate written contributor, assignment or licensing agreement approved by Clarity Structures Digital S.L.
+
+Submitting issues, suggestions, patches or pull requests:
+
+- does not transfer ownership to the submitter;
+- does not grant ownership or usage rights in the repository;
+- does not oblige Clarity Structures Digital S.L. to accept, use or compensate the contribution.
+
+## 7. No Warranty or Certification
+
+The repository is provided for authorized review on an “as is” and “as available” basis, without warranties of any kind.
+
+Clarity Structures Digital S.L. does not represent that the software is, without further assessment and written agreement:
+
+- suitable for production use;
+- free from errors or vulnerabilities;
+- certified for regulated or classified environments;
+- legally compliant for a particular deployment;
+- approved by any public authority or independent certification body;
+- suitable for safety-critical or mission-critical use.
+
+Technical evidence, tests, manifests, signatures or hashes demonstrate only the specific facts and scope expressly identified by those artefacts.
+
+## 8. Reservation of Rights
+
+All rights not expressly granted through a separate written agreement are reserved by Clarity Structures Digital S.L.
+
+No waiver, licence, transfer, assignment, exclusivity, security interest or other right arises through silence, repository access, technical discussions, evaluation activities or delivery of review materials.
