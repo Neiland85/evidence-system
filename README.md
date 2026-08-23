@@ -115,19 +115,15 @@ This file can:
 
 ---
 
-## Signature and legal anchoring
+## Export (what is actually verifiable)
 
-To reinforce legal value, the export can be anchored by means of:
+An independent reviewer can recompute, from the ZIP:
 
-* a **PDF document** describing the export,
-* the **digital fingerprint** of the ZIP file,
-* the **SHA-256 fingerprint** of the ZIP (hash-chain + ZIP). PAdES-LTA is not implemented.
+* the event hash-chain (`previousHash` → `eventHash`),
+* SHA-256 of each payload and of the ZIP,
+* `manifest.json` against the files in the pack.
 
-This type of signature:
-
-* incorporates time stamping,
-* allows long-term verification,
-* is verifiable with standard European tools.
+That is **hash-chain + ZIP**. PAdES-LTA is not implemented. No TSA, no OCSP, no archive timestamp. This system is not a trusted third party.
 
 ---
 
@@ -335,19 +331,15 @@ Este archivo puede:
 
 ---
 
-## Firma y anclaje legal
+## Exportación (qué se puede verificar de hecho)
 
-Para reforzar el valor jurídico, la exportación puede anclarse mediante:
+Un revisor independiente puede recomputar, a partir del ZIP:
 
-* un **documento PDF** que describe la exportación,
-* la **huella digital** del archivo ZIP,
-* la **huella SHA-256** del ZIP (hash-chain + ZIP). PAdES-LTA no implementado.
+* la cadena de eventos (`previousHash` → `eventHash`),
+* SHA-256 de cada payload y del ZIP,
+* `manifest.json` contra los ficheros del paquete.
 
-Este tipo de firma:
-
-* incorpora sellado temporal,
-* permite verificación a largo plazo,
-* es verificable con herramientas estándar europeas.
+Eso es **hash-chain + ZIP**. PAdES-LTA no implementado. No hay TSA, ni OCSP, ni sello de archivo. Este sistema no es un tercero de confianza.
 
 ---
 
