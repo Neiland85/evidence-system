@@ -121,7 +121,7 @@ To reinforce legal value, the export can be anchored by means of:
 
 * a **PDF document** describing the export,
 * the **digital fingerprint** of the ZIP file,
-* and an **advanced electronic signature of the PAdES-LTA type**.
+* the **SHA-256 fingerprint** of the ZIP (hash-chain + ZIP). PAdES-LTA is not implemented.
 
 This type of signature:
 
@@ -341,7 +341,7 @@ Para reforzar el valor jurídico, la exportación puede anclarse mediante:
 
 * un **documento PDF** que describe la exportación,
 * la **huella digital** del archivo ZIP,
-* y una **firma electrónica avanzada de tipo PAdES-LTA**.
+* la **huella SHA-256** del ZIP (hash-chain + ZIP). PAdES-LTA no implementado.
 
 Este tipo de firma:
 

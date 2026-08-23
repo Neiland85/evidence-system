@@ -5,6 +5,6 @@
   "stored_worm": "Fichero almacenado en almacenamiento inmutable.",
   "event_signed": "Evento firmado digitalmente.",
   "export_created": "Exportación creada.",
-  "export_signed": "Exportación firmada con PAdES-LTA.",
+  "export_signed": "Exportación = hash-chain + ZIP. PAdES-LTA no implementado.",
   "case_closed": "Expediente cerrado."
 }
