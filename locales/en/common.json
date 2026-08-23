@@ -5,6 +5,6 @@
   "stored_worm": "File stored in immutable storage.",
   "event_signed": "Event digitally signed.",
   "export_created": "Export created.",
-  "export_signed": "Export signed with PAdES-LTA.",
+  "export_signed": "Export is hash-chain + ZIP. PAdES-LTA is not implemented.",
   "case_closed": "Case closed."
 }

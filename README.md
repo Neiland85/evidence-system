@@ -115,19 +115,15 @@ This file can:
 
 ---
 
-## Signature and legal anchoring
+## Export (what is actually verifiable)
 
-To reinforce legal value, the export can be anchored by means of:
+An independent reviewer can recompute, from the ZIP:
 
-* a **PDF document** describing the export,
-* the **digital fingerprint** of the ZIP file,
-* and an **advanced electronic signature of the PAdES-LTA type**.
+* the event hash-chain (`previousHash` → `eventHash`),
+* SHA-256 of each payload and of the ZIP,
+* `manifest.json` against the files in the pack.
 
-This type of signature:
-
-* incorporates time stamping,
-* allows long-term verification,
-* is verifiable with standard European tools.
+That is **hash-chain + ZIP**. PAdES-LTA is not implemented. No TSA, no OCSP, no archive timestamp. This system is not a trusted third party.
 
 ---
 
@@ -175,7 +171,7 @@ Currently, the system provides:
 │  ✔ Immutable custody of evidence              │
 │  ✔ Verifiable traceability                    │
 │  ✔ Independent export                         │
-│  ✔ PAdES-LTA electronic signature             │
+│  ✖ PAdES-LTA not implemented             │
 └───────────────────────────────────────────────┘
 ```
 
@@ -250,7 +246,7 @@ Neil M. - Digital Forensic Expert
 
 * no puedan ser modificadas posteriormente,
 * cualquier intento de alteración sea detectable,
-* y terceros puedan verificar la integridad de la evidencia **sin confiar en el sistema original**.
+* un revisor independiente puede recomputar hashes del ZIP. Eso no convierte a este sistema en un tercero de confianza ni es un hecho jurídico.
 
 Su finalidad es **preservar prueba digital** de forma **trazable, verificable y defendible**.
 
@@ -335,19 +331,15 @@ Este archivo puede:
 
 ---
 
-## Firma y anclaje legal
+## Exportación (qué se puede verificar de hecho)
 
-Para reforzar el valor jurídico, la exportación puede anclarse mediante:
+Un revisor independiente puede recomputar, a partir del ZIP:
 
-* un **documento PDF** que describe la exportación,
-* la **huella digital** del archivo ZIP,
-* y una **firma electrónica avanzada de tipo PAdES-LTA**.
+* la cadena de eventos (`previousHash` → `eventHash`),
+* SHA-256 de cada payload y del ZIP,
+* `manifest.json` contra los ficheros del paquete.
 
-Este tipo de firma:
-
-* incorpora sellado temporal,
-* permite verificación a largo plazo,
-* es verificable con herramientas estándar europeas.
+Eso es **hash-chain + ZIP**. PAdES-LTA no implementado. No hay TSA, ni OCSP, ni sello de archivo. Este sistema no es un tercero de confianza.
 
 ---
 
@@ -395,7 +387,7 @@ Actualmente el sistema proporciona:
 │  ✔ Custodia inmutable de evidencias           │
 │  ✔ Trazabilidad verificable                   │
 │  ✔ Exportación independiente                  │
-│  ✔ Firma electrónica PAdES-LTA                │
+│  ✖ PAdES-LTA no implementado                │
 └───────────────────────────────────────────────┘
 ```
 

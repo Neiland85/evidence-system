@@ -38,7 +38,7 @@ const EnvSchema = z.object({
   SIGN_PROVIDER: z.enum(["local", "cloud"]),
   SIGN_CERT_PATH: z.string(),
   SIGN_CERT_PASSWORD: z.string(),
-  SIGN_PDF_PROFILE: z.literal("PAdES-LTA"),
+  SIGN_PDF_PROFILE: z.enum(["PAdES-B/T-experimental"]).default("PAdES-B/T-experimental"),
   SIGN_TSA_URL: z.string().url(),
 
   NLP_ENABLED: bool,

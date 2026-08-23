@@ -1,5 +1,5 @@
 /**
- * PAdES-LTA signing adapter placeholder.
+ * PAdES-B/T experimental (node-signpdf); LTA no implementado. signPdfPadesLTA throws.
  *
  * This module intentionally does not import a signing provider yet.
  *
@@ -10,6 +10,6 @@
  */
 export function signPdfPadesLTA(_inputPdfPath: string, _outputPdfPath: string): never {
   throw new Error(
-    "PAdES-LTA signing provider is not configured in this baseline. Wire a tested signing adapter before enabling this feature."
+    "SIGN_PDF_ENABLED=false; signPdfPadesLTA throws. PAdES-B/T experimental (node-signpdf); LTA no implementado."
   );
 }
