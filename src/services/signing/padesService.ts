@@ -1,5 +1,5 @@
 /**
- * PAdES-LTA signing adapter placeholder.
+ * PAdES-B/T experimental (node-signpdf); LTA no implementado. signPdfPadesLTA throws.
  *
  * This module intentionally does not import a signing provider yet.
  *

@@ -175,7 +175,7 @@ Currently, the system provides:
 │  ✔ Immutable custody of evidence              │
 │  ✔ Verifiable traceability                    │
 │  ✔ Independent export                         │
-│  ✔ PAdES-LTA electronic signature             │
+│  ✖ PAdES-LTA not implemented             │
 └───────────────────────────────────────────────┘
 ```
 
@@ -250,7 +250,7 @@ Neil M. - Digital Forensic Expert
 
 * no puedan ser modificadas posteriormente,
 * cualquier intento de alteración sea detectable,
-* y terceros puedan verificar la integridad de la evidencia **sin confiar en el sistema original**.
+* un revisor independiente puede recomputar hashes del ZIP. Eso no convierte a este sistema en un tercero de confianza ni es un hecho jurídico.
 
 Su finalidad es **preservar prueba digital** de forma **trazable, verificable y defendible**.
 
@@ -395,7 +395,7 @@ Actualmente el sistema proporciona:
 │  ✔ Custodia inmutable de evidencias           │
 │  ✔ Trazabilidad verificable                   │
 │  ✔ Exportación independiente                  │
-│  ✔ Firma electrónica PAdES-LTA                │
+│  ✖ PAdES-LTA no implementado                │
 └───────────────────────────────────────────────┘
 ```
 
