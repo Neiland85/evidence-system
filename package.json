@@ -38,7 +38,7 @@
   },
   "homepage": "https://github.com/Neiland85/evidence-system#readme",
   "dependencies": {
-    "adm-zip": "^0.6.0",
+    "adm-zip": "^0.6.1",
     "archiver": "^8.0.0",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
